@@ -1,12 +1,12 @@
 class Taxi extends Base
 {
-  boolean left = false, right = false;
+  boolean left = false, right = false, fast = false;
   
   Taxi()
   {
     rectMode(CENTER);
     velocity = new PVector (0, 0);
-    position = new PVector (width/2, height/2);
+    position = new PVector (width/2, height - 20);
     theta = 0;
   }
   
@@ -79,9 +79,9 @@ class Taxi extends Base
   {
     if(position.y > height)
     {
-      position.y = 0;
+      position.y = 110;
     }
-    if(position.y < 0)
+    if(position.y < 110)
     {
       position.y = height;
     }
