@@ -25,6 +25,7 @@ class Customers extends Base
     rect (position.x+2, position.y+19, 4, 8);
     rect (position.x-2, position.y+19, 4, 8);
     fill(0);
+    textFont(s, 10);
     text("TAXI!", position.x+5, position.y -15, 30); 
   }
   
@@ -34,7 +35,6 @@ class Customers extends Base
     position.y = (random(4, 560));
     if (((position.y < 100) || position.x > topLeft.position.x- 168 && position.y < topLeft.position.y +100 && position.x < topLeft.position.x + 168 && position.y > topLeft.position.y - 68) || (position.x > topRight.position.x- 168 && position.y < topRight.position.y +100 && position.x < topRight.position.x + 168 && position.y > topRight.position.y - 68)|| (position.x > bottomRight.position.x- 168 && position.y < bottomRight.position.y +100 && position.x < bottomRight.position.x + 168 && position.y > bottomRight.position.y - 68)||(position.x > bottomLeft.position.x- 168 && position.y < bottomLeft.position.y +100 && position.x < bottomLeft.position.x + 168 && position.y > bottomLeft.position.y - 68))
     {
-      println("inside");
        randomise(); 
     }     
   }

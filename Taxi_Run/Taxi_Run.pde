@@ -1,3 +1,5 @@
+PFont f, s;
+Score score;
 Taxi taxi;
 Customers customer; 
 Destination dest;
@@ -11,6 +13,9 @@ Header header;
 void setup()
 {
   size (1000, 650);
+  f = loadFont("ShowcardGothic-Reg-48.vlw");
+  s = loadFont("GillSansMT-Bold-10.vlw");
+  textFont(f);
   background(180);
   header = new Header();
   taxi = new Taxi();
@@ -22,6 +27,7 @@ void setup()
   bottomRight = new Buildings(width - width/4 - 15, height - height/4 - 30);   
   bottomLeft = new Buildings(width/4 + 5, height - height/4 - 30);//bottomLeft;
   topRight = new Buildings(width - width/4 - 15, height/4 + 70);//bottomLeft;
+  score = new Score();
 }
 
 void draw()
@@ -56,6 +62,7 @@ void draw()
       {
         customer.randomise();
         cust_dest.add(customer);
+        score.addScore();
       }
       cust_dest.remove(c);
       c.collected = false;
@@ -64,6 +71,7 @@ void draw()
   taxi.draw();
   taxi.update();
   taxi.checkSides();
+  score.draw();
 }
 
 void keyPressed()
@@ -71,12 +79,12 @@ void keyPressed()
   if (keyCode == LEFT || key == 'a' || key == 'A')
   {
     taxi.left = true;
-    taxi.theta += 0.1;
+    //taxi.theta += 0.1;
   }
   if (keyCode == RIGHT || key == 'd' || key == 'D')
   {
     taxi.right = true;
-    taxi.theta -= 0.1;
+    //taxi.theta -= 0.1;
   }
   if (keyCode == UP || key == 'w' || key == 'W')
   {
@@ -101,6 +109,18 @@ void keyPressed()
       taxi.speed = 100;
       taxi.fast = false;
     }
+  }
+}
+
+void keyReleased()
+{
+  if (keyCode == LEFT || key == 'a' || key == 'A' )
+  {
+    taxi.left = false;
+  }
+  if (keyCode == RIGHT || key == 'd' || key == 'D')
+  {
+    taxi.right = false;
   }
 }
 

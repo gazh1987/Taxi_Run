@@ -1,33 +1,40 @@
 class Taxi extends Base
 {
   boolean left = false, right = false, fast = false;
+  float rot = 0.0f;
   
   Taxi()
   {
     rectMode(CENTER);
     velocity = new PVector (0, 0);
     position = new PVector (width/2, height - 20);
-    theta = 0;
+    theta = rot;
   }
   
   void draw()
-  {
-    rotate2D(velocity, theta);
+  { 
+    rotateTaxi(velocity, theta);
     
     if (left == false && right == false)
     {
+       pushMatrix();
+       translate(position.x, position.y);
+       rotate(-theta);
        fill(#f8e281);
-       rect (position.x, position.y, 30, 15);
+       rect (0, 0, 30, 15);
        fill (0);
-       rect (position.x + 8, position.y + 8, 10, 3);
-       rect (position.x -8, position.y + 8, 10, 3);
-       rect (position.x -8, position.y - 8, 10, 3);
-       rect (position.x +8, position.y - 8, 10, 3);
+       rect (0 + 8, 0 + 8, 10, 3);
+       rect (0 -8, 0 + 8, 10, 3);
+       rect (0 -8, 0 - 8, 10, 3);
+       rect (0 +8, 0 - 8, 10, 3);
        fill(200);
-       rect (position.x, position.y, 3, 10);
+       rect (0, 0, 3, 10);
+       popMatrix();
+       
     }
     if (left == true)
     {
+       theta += 0.04;
        pushMatrix();
        translate(position.x, position.y);
        rectMode(CENTER);
@@ -45,11 +52,12 @@ class Taxi extends Base
     } 
     if (right == true)
     {
-      pushMatrix();
-      translate(position.x, position.y);
-      rectMode(CENTER);
-      rotate(-theta);
-      fill(#f8e281);
+       theta -= 0.04;
+       pushMatrix();
+       translate(position.x, position.y);
+       rectMode(CENTER);
+       rotate(-theta);
+       fill(#f8e281);
        rect (0, 0, 30, 15);
        fill (0);
        rect (0 + 8, 0 + 8, 10, 2);
@@ -69,7 +77,7 @@ class Taxi extends Base
     velocity.limit(1.5);
   }
   
-  void rotate2D(PVector velocity, float theta) 
+  void rotateTaxi(PVector velocity, float theta) 
   { 
     velocity.x = cos(-theta);
     velocity.y = sin(-theta);
