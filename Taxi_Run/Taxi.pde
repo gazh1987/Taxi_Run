@@ -1,19 +1,19 @@
 class Taxi extends Base
 {
   boolean left = false, right = false, fast = false;
-  float rot = 0.0f;
   
   Taxi()
   {
     rectMode(CENTER);
     velocity = new PVector (0, 0);
     position = new PVector (width/2, height - 20);
-    theta = rot;
+    theta = 0.0f;
   }
   
   void draw()
   { 
-    rotateTaxi(velocity, theta);
+    velocity.x = cos(-theta);
+    velocity.y = sin(-theta);
     
     if (left == false && right == false)
     {
@@ -75,12 +75,6 @@ class Taxi extends Base
     position.x += velocity.x * timeDelta * speed;
     position.y += velocity.y * timeDelta * speed;
     velocity.limit(1.5);
-  }
-  
-  void rotateTaxi(PVector velocity, float theta) 
-  { 
-    velocity.x = cos(-theta);
-    velocity.y = sin(-theta);
   }
   
   void checkSides()

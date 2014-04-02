@@ -1,9 +1,18 @@
 PFont f, s;
+ArrayList<Customers> cust_dest;
+ArrayList<Base> objects; 
 Score score;
 Taxi taxi;
+Cars car1;
+Cars car2;
+Cars car3;
+Cars car4;
+Cars car5;
+Cars car6;
+Cars car7;
+Cars car8;
 Customers customer; 
 Destination dest;
-ArrayList<Customers> cust_dest;
 Buildings topLeft;
 Buildings topRight;
 Buildings bottomLeft;
@@ -17,21 +26,49 @@ void setup()
   s = loadFont("GillSansMT-Bold-10.vlw");
   textFont(f);
   background(180);
-  header = new Header();
-  taxi = new Taxi();
+  
+  //Customer / Destination
   cust_dest = new ArrayList<Customers>();
   customer = new Customers();
   dest = new Destination();
   cust_dest.add(customer);
+  
+  //Game Objects
+  objects = new ArrayList<Base>();
+  taxi = new Taxi();
+  car1 = new Cars(260, 580, 445, 580, 445, 385, 70, 385, 71, 580, 25, 255, 0, 0);
+  car2 = new Cars(261, 350, 445, 350, 445, 155, 70, 155, 71, 350, 30, 43, 0, 255);
+  car3 = new Cars(661, 350, 555, 350, 555, 149, 931, 150, 931, 350, 25, 0, 255, 0);
+  car4 = new Cars(661, 580, 555, 580, 555, 385, 931, 385, 931, 580, 20, 100, 100, 50);
+  car5 = new Cars(445, 385, 70, 385, 71, 580, 260, 580, 445, 580, 25, 255, 0, 0);
+  car6 = new Cars(445, 155, 70, 155, 71, 350, 261, 350, 445, 350, 30, 43, 0, 255);
+  car7 = new Cars(555, 149, 931, 150, 931, 350, 661, 350, 555, 350, 25, 0, 255, 0); 
+  car8 = new Cars(555, 385, 931, 385, 931, 580, 661, 580, 555, 580, 20, 100, 100, 50); //661, 580, 555, 580,-> 555, 385, 931, 385, 931, 580,
   topLeft = new Buildings(width/4 + 5, height/4 + 70);
   bottomRight = new Buildings(width - width/4 - 15, height - height/4 - 30);   
-  bottomLeft = new Buildings(width/4 + 5, height - height/4 - 30);//bottomLeft;
-  topRight = new Buildings(width - width/4 - 15, height/4 + 70);//bottomLeft;
+  bottomLeft = new Buildings(width/4 + 5, height - height/4 - 30);
+  topRight = new Buildings(width - width/4 - 15, height/4 + 70);
+  
+  objects.add(topLeft);
+  objects.add(bottomRight);
+  objects.add(bottomLeft);
+  objects.add(topRight); 
+  objects.add(taxi);
+  objects.add(car1);
+  objects.add(car2);
+  objects.add(car3);
+  objects.add(car4);
+  objects.add(car5);
+  objects.add(car6);
+  objects.add(car7);
+  objects.add(car8);
+  
+  header = new Header();
   score = new Score();
 }
 
 void draw()
-{
+{ 
   if (customer.startGame == true)
   {
     customer.randomise();
@@ -39,14 +76,15 @@ void draw()
   }
   background(150);
   header.draw();
-  topLeft.draw();
-  topRight.draw();
-  bottomLeft.draw();
-  bottomRight.draw();
-  topLeft.hitDetection();
-  topRight.hitDetection();
-  bottomLeft.hitDetection();
-  bottomRight.hitDetection();
+  
+  for (Base o : objects)
+  {
+    o.draw();
+    o.update();
+    o.checkSides();
+    o.hitDetection();
+  }
+  
   for (Customers c : cust_dest)
   {
     c.draw();
@@ -67,25 +105,23 @@ void draw()
       cust_dest.remove(c);
       c.collected = false;
     }  
-  }
-  taxi.draw();
-  taxi.update();
-  taxi.checkSides();
+  }  
   score.draw();
 }
 
 void keyPressed()
 {
+  //Turning
   if (keyCode == LEFT || key == 'a' || key == 'A')
   {
     taxi.left = true;
-    //taxi.theta += 0.1;
   }
   if (keyCode == RIGHT || key == 'd' || key == 'D')
   {
     taxi.right = true;
-    //taxi.theta -= 0.1;
   }
+  
+  //Speed
   if (keyCode == UP || key == 'w' || key == 'W')
   {
     if (taxi.fast == true)
@@ -112,6 +148,7 @@ void keyPressed()
   }
 }
 
+//Stopping Turning
 void keyReleased()
 {
   if (keyCode == LEFT || key == 'a' || key == 'A' )
