@@ -18,6 +18,8 @@ Buildings topRight;
 Buildings bottomLeft;
 Buildings bottomRight;
 Header header;
+Fuel fuel;
+ReFuel rFuel;
 
 void setup()
 {
@@ -36,18 +38,20 @@ void setup()
   //Game Objects
   objects = new ArrayList<Base>();
   taxi = new Taxi();
-  car1 = new Cars(260, 580, 445, 580, 445, 385, 70, 385, 71, 580, 25, 255, 0, 0);
-  car2 = new Cars(261, 350, 445, 350, 445, 155, 70, 155, 71, 350, 30, 43, 0, 255);
-  car3 = new Cars(661, 350, 555, 350, 555, 149, 931, 150, 931, 350, 25, 0, 255, 0);
-  car4 = new Cars(661, 580, 555, 580, 555, 385, 931, 385, 931, 580, 20, 100, 100, 50);
-  car5 = new Cars(445, 385, 70, 385, 71, 580, 260, 580, 445, 580, 25, 255, 0, 0);
-  car6 = new Cars(445, 155, 70, 155, 71, 350, 261, 350, 445, 350, 30, 43, 0, 255);
-  car7 = new Cars(555, 149, 931, 150, 931, 350, 661, 350, 555, 350, 25, 0, 255, 0); 
-  car8 = new Cars(555, 385, 931, 385, 931, 580, 661, 580, 555, 580, 20, 100, 100, 50); //661, 580, 555, 580,-> 555, 385, 931, 385, 931, 580,
+  car1 = new Cars(260, 580, 445, 580, 445, 385, 70, 385, 71, 580, 25, random(0, 255), random(0, 255), random(0, 255));
+  car2 = new Cars(261, 350, 445, 350, 445, 155, 70, 155, 71, 350, 30, random(0, 255), random(0, 255), random(0, 255));
+  car3 = new Cars(661, 350, 555, 350, 555, 149, 931, 150, 931, 350, 25, random(0, 255), random(0, 255), random(0, 255));
+  car4 = new Cars(661, 580, 555, 580, 555, 385, 931, 385, 931, 580, 20, random(0, 255), random(0, 255), random(0, 255));
+  car5 = new Cars(445, 385, 70, 385, 71, 580, 260, 580, 445, 580, 25, random(0, 255), random(0, 255), random(0, 255));
+  car6 = new Cars(445, 155, 70, 155, 71, 350, 261, 350, 445, 350, 30, random(0, 255), random(0, 255), random(0, 255));
+  car7 = new Cars(555, 149, 931, 150, 931, 350, 661, 350, 555, 350, 25, random(0, 255), random(0, 255), random(0, 255)); 
+  car8 = new Cars(555, 385, 931, 385, 931, 580, 661, 580, 555, 580, 20, random(0, 255), random(0, 255), random(0, 255)); 
   topLeft = new Buildings(width/4 + 5, height/4 + 70);
   bottomRight = new Buildings(width - width/4 - 15, height - height/4 - 30);   
   bottomLeft = new Buildings(width/4 + 5, height - height/4 - 30);
   topRight = new Buildings(width - width/4 - 15, height/4 + 70);
+  fuel = new Fuel();
+  rFuel = new ReFuel();
   
   objects.add(topLeft);
   objects.add(bottomRight);
@@ -62,6 +66,7 @@ void setup()
   objects.add(car6);
   objects.add(car7);
   objects.add(car8);
+  objects.add(fuel);
   
   header = new Header();
   score = new Score();
@@ -83,6 +88,12 @@ void draw()
     o.update();
     o.checkSides();
     o.hitDetection();
+    o.reFuel();
+  }
+  if (rFuel.remove == true)
+  {
+    rFuel.remove = false;
+    objects.remove(rFuel);
   }
   
   for (Customers c : cust_dest)
@@ -106,6 +117,20 @@ void draw()
       c.collected = false;
     }  
   }  
+  
+  if (rFuel.place == false)
+  {
+    if (fuel.fuel < 85)
+    {
+      rFuel.place = true;
+      if (rFuel.place == true)
+      {
+        rFuel.randomise();
+        objects.add(rFuel);
+      }
+    }
+  }
+  
   score.draw();
 }
 

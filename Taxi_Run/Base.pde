@@ -13,6 +13,10 @@ class Base
   {
   }
   
+  void reFuel()
+  {
+  }
+  
   void update()
   {
   }

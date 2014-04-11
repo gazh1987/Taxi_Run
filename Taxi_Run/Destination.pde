@@ -30,5 +30,4 @@ class Destination extends Customers
       }
     }
   }
-  
 }

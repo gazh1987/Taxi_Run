@@ -3,11 +3,13 @@ class Cars extends Base
   public WayPoints[] points = new WayPoints[5];
   PVector dest;
   int p = 0;
-  int x, y, r, g, b;
+  int x, y;
+  float r, g, b;
+  float distance;
   
   boolean saveX = false, saveY = false;
   
-  Cars(int d0x, int d0y, int d1x, int d1y, int d2x, int d2y, int d3x, int d3y, int d4x, int d4y,int s, int r, int g, int b) 
+  Cars(int d0x, int d0y, int d1x, int d1y, int d2x, int d2y, int d3x, int d3y, int d4x, int d4y,int s, float r, float g, float b) 
   {
     this.r = r;
     this.g = g;
@@ -42,8 +44,6 @@ class Cars extends Base
   
   void update()
   {
-    println(car4.points[p].points.x);
-    println(car4.points[p].points.y);
     dest = new PVector(points[p].points.x, points[p].points.y);
     velocity = PVector.sub(dest, position);
     velocity.normalize(); 
@@ -77,5 +77,14 @@ class Cars extends Base
       saveX = false;
       saveY = false;
     } 
+  }
+  
+  void hitDetection()
+  {
+    distance = dist(taxi.position.x, taxi.position.y, position.x, position.y);
+    if (distance < 23)
+    {
+      stop();
+    }
   }
 }

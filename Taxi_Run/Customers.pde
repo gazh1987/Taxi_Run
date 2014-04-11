@@ -45,6 +45,5 @@ class Customers extends Base
         dest.switch_beetween_cust_dest = true;
       }
     }
-  }
-  
+  }  
 }
