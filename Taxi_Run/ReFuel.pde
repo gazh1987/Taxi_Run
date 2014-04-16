@@ -14,7 +14,7 @@ class ReFuel extends Base
     fill(#ff0000);
     ellipse(position.x + 4, position.y - 5, 30, 30);
     fill(255);
-    textFont(f);
+    textFont(f1);
     textSize(18);
     text (s, position.x, position.y);
   }
@@ -24,11 +24,23 @@ class ReFuel extends Base
     distance = dist(taxi.position.x, taxi.position.y, position.x, position.y);
     if (distance < 24)
     {
+      collect.play();
+      collect.rewind();
       fuel.fuel = 190;
       fuel.r = 0;
       fuel.g = 255;
       place = false;
       remove = true;
     }
+  }
+  
+  void menuVersion()
+  {
+    fill(#ff0000);
+    ellipse(width/2 + 260, height/2 + 140, 30, 30);
+    fill(255);
+    textFont(f1);
+    textSize(18);
+    text (s, width/2 + 256, height/2 + 145);
   }
 }

@@ -5,7 +5,7 @@ class Score
   
   void draw()
   {
-    textFont(f);
+    textFont(f1);
     textSize(32);
     fill(255);
     text (s, 10, 60);

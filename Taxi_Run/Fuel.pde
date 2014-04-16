@@ -14,7 +14,7 @@ class Fuel extends Base
   void draw()
   {
     fill(255);
-    textFont(f);
+    textFont(f1);
     textSize(18);
     text (s, width / 2 + 340, 35);
     fill(r, g, b);

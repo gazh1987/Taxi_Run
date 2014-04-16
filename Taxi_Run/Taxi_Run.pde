@@ -1,6 +1,13 @@
-PFont f, s;
+import ddf.minim.*;
+Minim minim;
+AudioPlayer theme;
+AudioPlayer menuMusic;
+AudioPlayer collect;
+
+PFont f1, s, m;
 ArrayList<Customers> cust_dest;
 ArrayList<Base> objects; 
+MainMenu menu;
 Score score;
 Taxi taxi;
 Cars car1;
@@ -20,14 +27,30 @@ Buildings bottomRight;
 Header header;
 Fuel fuel;
 ReFuel rFuel;
+int SIZE = 45;
+Clouds clouds[] = new Clouds[SIZE];
 
 void setup()
 {
   size (1000, 650);
-  f = loadFont("ShowcardGothic-Reg-48.vlw");
+  f1 = loadFont("ShowcardGothic-Reg-48.vlw");
   s = loadFont("GillSansMT-Bold-10.vlw");
-  textFont(f);
+  m = loadFont("BrushScriptMT-48.vlw");
+  textFont(f1);
   background(180);
+  
+  //Sound
+  minim = new Minim(this);
+  menuMusic = minim.loadFile("TaxiDriverTheme.wav");
+  collect = minim.loadFile("collect.wav");
+  theme = minim.loadFile("BullittTheme.wav");
+  
+  //Menu
+  menu = new MainMenu();
+  for (int i = 0; i < SIZE; i ++)
+  {
+    clouds[i] = new Clouds();
+  }
   
   //Customer / Destination
   cust_dest = new ArrayList<Customers>();
@@ -74,68 +97,96 @@ void setup()
 
 void draw()
 { 
-  if (customer.startGame == true)
+  if (menu.game == false)
   {
-    customer.randomise();
-    customer.startGame = false;
-  }
-  background(150);
-  header.draw();
-  
-  for (Base o : objects)
-  {
-    o.draw();
-    o.update();
-    o.checkSides();
-    o.hitDetection();
-    o.reFuel();
-  }
-  if (rFuel.remove == true)
-  {
-    rFuel.remove = false;
-    objects.remove(rFuel);
-  }
-  
-  for (Customers c : cust_dest)
-  {
-    c.draw();
-    c.hitDetection();
-    if (c.collected == true)
+    background(#50afe5);
+    for (int i = 0; i < SIZE; i ++)
     {
-      if (c.switch_beetween_cust_dest == true)
+      clouds[i].draw();
+      clouds[i].update();
+      clouds[i].checkSides();
+    }
+    menu.logo();
+    menu.update();
+    menu.instruction();
+    menuMusic.play();
+  }
+  else
+  {
+    theme.play();
+    if (customer.startGame == true)
+    {
+      customer.randomise();
+      customer.startGame = false;
+    }
+    background(150);
+    header.draw();
+    
+    for (Customers c : cust_dest)
+    {
+      c.draw();
+      c.hitDetection();
+      if (c.collected == true)
       {
-        dest.randomise();
-        cust_dest.add(dest);
-      }
-      else if (c.switch_beetween_cust_dest == false)
-      {
-        customer.randomise();
-        cust_dest.add(customer);
-        score.addScore();
-      }
-      cust_dest.remove(c);
-      c.collected = false;
+        if (c.switch_beetween_cust_dest == true)
+        {
+          collect.play();
+          collect.rewind();
+          dest.randomise();
+          cust_dest.add(dest);
+        }
+        else if (c.switch_beetween_cust_dest == false)
+        {
+          collect.play();
+          collect.rewind();
+          customer.randomise();
+          cust_dest.add(customer);
+          score.addScore();
+        }
+        cust_dest.remove(c);
+        c.collected = false;
+      }  
+    }
+    
+    for (Base o : objects)
+    {
+      o.draw();
+      o.update();
+      o.checkSides();
+      o.hitDetection();
+      o.reFuel();
+    }
+    if (rFuel.remove == true)
+    {
+      rFuel.remove = false;
+      objects.remove(rFuel);
     }  
-  }  
-  
-  if (rFuel.place == false)
-  {
-    if (fuel.fuel < 85)
+    
+    if (rFuel.place == false)
     {
-      rFuel.place = true;
-      if (rFuel.place == true)
+      if (fuel.fuel < 85)
       {
-        rFuel.randomise();
-        objects.add(rFuel);
+        rFuel.place = true;
+        if (rFuel.place == true)
+        {
+          rFuel.randomise();
+          objects.add(rFuel);
+        }
       }
     }
+    score.draw();
   }
-  
-  score.draw();
 }
-
+  
 void keyPressed()
 {
+  //Menu Option
+  if (key == 's' | key == 'S') 
+  {
+    menuMusic.close();
+    menu.game = true;
+  }
+  
   //Turning
   if (keyCode == LEFT || key == 'a' || key == 'A')
   {
@@ -145,44 +196,45 @@ void keyPressed()
   {
     taxi.right = true;
   }
-  
+    
   //Speed
   if (keyCode == UP || key == 'w' || key == 'W')
   {
     if (taxi.fast == true)
-    {    
-      taxi.speed *= 1;
+      {    
+        taxi.speed *= 1;
+      }
+      else
+      {
+        taxi.speed *= 1.5;
+        taxi.fast = true;
+      }
     }
-    else
+    if (keyCode == DOWN || key == 's' || key == 'S')
     {
-      taxi.speed *= 1.5;
-      taxi.fast = true;
+      if (taxi.fast == false)
+      {    
+        taxi.speed *= 1;
+      }
+      else
+      {
+        taxi.speed = 100;
+        taxi.fast = false;
+      }
     }
   }
-  if (keyCode == DOWN || key == 's' || key == 'S')
+  
+  //Stopping Turning
+  void keyReleased()
   {
-    if (taxi.fast == false)
-    {    
-      taxi.speed *= 1;
-    }
-    else
+    if (keyCode == LEFT || key == 'a' || key == 'A' )
     {
-      taxi.speed = 100;
-      taxi.fast = false;
+      taxi.left = false;
+    }
+    if (keyCode == RIGHT || key == 'd' || key == 'D')
+    {
+      taxi.right = false;
     }
   }
-}
 
-//Stopping Turning
-void keyReleased()
-{
-  if (keyCode == LEFT || key == 'a' || key == 'A' )
-  {
-    taxi.left = false;
-  }
-  if (keyCode == RIGHT || key == 'd' || key == 'D')
-  {
-    taxi.right = false;
-  }
-}
 

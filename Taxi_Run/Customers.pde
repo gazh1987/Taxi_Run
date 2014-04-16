@@ -46,4 +46,21 @@ class Customers extends Base
       }
     }
   }  
+  
+  void menuVersion()
+  {
+    fill(#da5f1e);
+    ellipse(width / 2 + 100, height / 2 + 25, 12, 14);
+    fill(255);
+    ellipse(width / 2 + 100, height / 2 + 25, 10, 10);
+    fill(#34a6e0);
+    rect (width / 2 + 100, height / 2 + 35, 8, 10);
+    rect (width / 2 + 100, height / 2 + 35, 8, 10);
+    rect (width / 2 + 105, height / 2 + 34, 3, 8);
+    rect (width / 2 + 95, height / 2 + 29, 3, 8);
+    fill(#da5f1e);
+    rect (width / 2 + 102, height / 2 + 44, 4, 8);
+    rect (width / 2 + 98, height / 2 + 44, 4, 8);
+    fill(0); 
+  }
 }

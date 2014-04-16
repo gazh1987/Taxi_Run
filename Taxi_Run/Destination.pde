@@ -30,4 +30,12 @@ class Destination extends Customers
       }
     }
   }
+  
+  void menuVersion()
+  {
+    strokeWeight(0);
+    fill(#e80e0e);
+    ellipse(width/2 + 315, height/2 +90, 50, 50);
+    strokeWeight(1);
+  }
 }
