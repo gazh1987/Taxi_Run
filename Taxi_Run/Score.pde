@@ -17,5 +17,10 @@ class Score
   {
     score += 100;
   } 
+  
+  void subScore()
+  {
+    score -= 25;
+  }
 }
 

@@ -47,7 +47,7 @@ class Buildings extends Base
   {
     if (taxi.position.x > position.x- 159 && taxi.position.y < position.y +93 && taxi.position.x < position.x + 159 && taxi.position.y > position.y - 59)
     {
-      stop();
+      taxi.alive = false;
     }
   }
 }

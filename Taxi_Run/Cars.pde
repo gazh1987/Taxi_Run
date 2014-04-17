@@ -84,7 +84,7 @@ class Cars extends Base
     distance = dist(taxi.position.x, taxi.position.y, position.x, position.y);
     if (distance < 23)
     {
-      stop();
+     taxi.alive = false;
     }
   }
 }

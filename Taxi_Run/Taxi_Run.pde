@@ -10,6 +10,9 @@ ArrayList<Base> objects;
 MainMenu menu;
 Score score;
 Taxi taxi;
+PoliceHelicopter police1;
+PoliceHelicopter police2;
+PoliceHelicopter police3;
 Cars car1;
 Cars car2;
 Cars car3;
@@ -75,6 +78,9 @@ void setup()
   topRight = new Buildings(width - width/4 - 15, height/4 + 70);
   fuel = new Fuel();
   rFuel = new ReFuel();
+  police1 = new PoliceHelicopter(40, 960);
+  police2 = new PoliceHelicopter(960, 620);
+  police3 = new PoliceHelicopter(40, 620);
   
   objects.add(topLeft);
   objects.add(bottomRight);
@@ -90,6 +96,9 @@ void setup()
   objects.add(car7);
   objects.add(car8);
   objects.add(fuel);
+  objects.add(police1);
+  objects.add(police2);
+  objects.add(police3);
   
   header = new Header();
   score = new Score();
@@ -111,7 +120,7 @@ void draw()
     menu.instruction();
     menuMusic.play();
   }
-  else
+  else if (menu.game == true)
   {
     theme.play();
     if (customer.startGame == true)
@@ -156,6 +165,7 @@ void draw()
       o.hitDetection();
       o.reFuel();
     }
+    
     if (rFuel.remove == true)
     {
       rFuel.remove = false;
@@ -175,6 +185,40 @@ void draw()
       }
     }
     score.draw();
+  }
+  if (taxi.alive == false)
+  {
+    //Getting error when put in for loop!!
+    objects.remove(topLeft);
+    objects.remove(bottomRight);
+    objects.remove(bottomLeft);
+    objects.remove(topRight); 
+    objects.remove(taxi);
+    objects.remove(car1);
+    objects.remove(car2);
+    objects.remove(car3);
+    objects.remove(car4);
+    objects.remove(car5);
+    objects.remove(car6);
+    objects.remove(car7);
+    objects.remove(car8);
+    objects.remove(fuel);
+    objects.remove(police1);
+    objects.remove(police2);
+    objects.remove(police3);
+    cust_dest.remove(customer);
+    cust_dest.remove(dest);
+    
+    header.expandHeader();
+    textSize(40);
+    fill(32);
+    text("Game Over!\nYou scored: " + score.score, width/2-125, height/2-100);
+    text("Press the 'r' key \nto return to opening\nscreen! ", width/2-125, height/2+50);
+    if (key == 'r' | key == 'R')
+    {
+      minim.stop();
+      setup();
+    }
   }
 }
   

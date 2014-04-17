@@ -29,7 +29,7 @@ class Fuel extends Base
     }
     if (fuel == 0)
     {
-      stop();
+      taxi.alive = false;
     }
   }
  

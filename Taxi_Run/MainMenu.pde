@@ -45,6 +45,8 @@ class MainMenu
       text("Dont run out of fuel! Collect this => ", width/2 - 200, height/2 + 150);
       f.menuVersion();
       fill(0);
+      text("Dont crash into the cars or buildings,", width/2 - 200, height/2 + 200);
+      text("And avoid the police helicopters!", width/2 - 200, height/2 + 220);
       text("Press \"s\" to start the game...  ", width/2 - 200, height/2 + 250);
     }
   }

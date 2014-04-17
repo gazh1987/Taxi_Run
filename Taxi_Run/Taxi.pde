@@ -1,6 +1,7 @@
 class Taxi extends Base
 {
   boolean left = false, right = false, fast = false;
+  boolean alive = true;
   
   Taxi()
   {

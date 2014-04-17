@@ -3,6 +3,7 @@ class Base
   PVector position;
   PVector velocity;
   PVector force;
+  Boolean hitDetected = false;
   float look;
   float theta;
   float mass;

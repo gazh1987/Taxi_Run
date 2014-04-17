@@ -24,6 +24,7 @@ class ReFuel extends Base
     distance = dist(taxi.position.x, taxi.position.y, position.x, position.y);
     if (distance < 24)
     {
+      score.subScore();
       collect.play();
       collect.rewind();
       fuel.fuel = 190;
