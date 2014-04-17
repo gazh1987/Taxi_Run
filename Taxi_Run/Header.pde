@@ -20,9 +20,9 @@ class Header
   void expandHeader()
   {
     y += 4;
-    if (y > 300)
+    if (y > 320)
     {
-      y = 300;
+      y = 320;
     }
   }
 }

@@ -38,10 +38,10 @@ class ReFuel extends Base
   void menuVersion()
   {
     fill(#ff0000);
-    ellipse(width/2 + 260, height/2 + 140, 30, 30);
+    ellipse(width/2 + 130, height/2 + 140, 30, 30);
     fill(255);
     textFont(f1);
     textSize(18);
-    text (s, width/2 + 256, height/2 + 145);
+    text (s, width/2 + 126, height/2 + 145);
   }
 }

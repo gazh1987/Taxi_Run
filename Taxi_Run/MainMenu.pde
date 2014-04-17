@@ -34,6 +34,8 @@ class MainMenu
       textFont(f1);
       textSize(21);
       fill(0);
+      text("Use the Direction pad or A, W, S, D to move", width/2 - 200, height/2 - 100);
+      text("Press up to go fast and down to go slow", width/2 - 200, height/2 - 50);
       text("You are the taxi => ", width/2 - 200, height/2);
       t.menuVersion();
       fill(0);
@@ -42,12 +44,12 @@ class MainMenu
       text("Drop the Customer at the Destination => ", width/2 - 200, height/2 + 100); 
       d.menuVersion();
       fill(0);
-      text("Dont run out of fuel! Collect this => ", width/2 - 200, height/2 + 150);
+      text("Collect this to Re-Fuel => ", width/2 - 200, height/2 + 150);
       f.menuVersion();
       fill(0);
       text("Dont crash into the cars or buildings,", width/2 - 200, height/2 + 200);
       text("And avoid the police helicopters!", width/2 - 200, height/2 + 220);
-      text("Press \"s\" to start the game...  ", width/2 - 200, height/2 + 250);
+      text("Press \"s\" to start the game...  ", width/2 - 200, height/2 + 270);
     }
   }
 }
