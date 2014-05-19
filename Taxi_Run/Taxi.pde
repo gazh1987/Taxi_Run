@@ -13,11 +13,6 @@ class Taxi extends Base
   
   void draw()
   { 
-    velocity.x = cos(-theta);
-    velocity.y = sin(-theta);
-    
-    if (left == false && right == false)
-    {
        pushMatrix();
        translate(position.x, position.y);
        rotate(-theta);
@@ -31,48 +26,20 @@ class Taxi extends Base
        fill(200);
        rect (0, 0, 3, 10);
        popMatrix();
-       
-    }
-    if (left == true)
-    {
-       theta += 0.04;
-       pushMatrix();
-       translate(position.x, position.y);
-       rectMode(CENTER);
-       rotate(-theta);
-       fill(#f8e281);
-       rect (0, 0, 30, 15);
-       fill (0);
-       rect (0 + 8, 0 + 8, 10, 3);
-       rect (0 - 8, 0 + 8, 10, 3);
-       rect (0 - 8, 0 - 8, 10, 3);
-       rect (0 + 8, 0 - 8, 10, 3);
-       fill(200);
-       rect (0, 0, 3, 10);
-       popMatrix();
-    } 
-    if (right == true)
-    {
-       theta -= 0.04;
-       pushMatrix();
-       translate(position.x, position.y);
-       rectMode(CENTER);
-       rotate(-theta);
-       fill(#f8e281);
-       rect (0, 0, 30, 15);
-       fill (0);
-       rect (0 + 8, 0 + 8, 10, 2);
-       rect (0 - 8, 0 + 8, 10, 2);
-       rect (0 - 8, 0 - 8, 10, 2);
-       rect (0 + 8, 0 - 8, 10, 2);
-       fill(200);
-       rect (0, 0, 3, 10);
-       popMatrix();
-    }
   }
   
   void update()
   {
+    if (left == true)
+    {
+       theta += 0.04;
+    }
+    if (right == true)
+    {
+       theta -= 0.04;
+    }
+    velocity.x = cos(-theta);
+    velocity.y = sin(-theta);
     position.x += velocity.x * timeDelta * speed;
     position.y += velocity.y * timeDelta * speed;
     velocity.limit(1.5);

@@ -3,6 +3,7 @@ class Score
   String s = "Score: ";
   int score = 0;
   
+  
   void draw()
   {
     textFont(f1);
@@ -22,5 +23,6 @@ class Score
   {
     score -= 25;
   }
+
 }
 

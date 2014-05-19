@@ -227,8 +227,11 @@ void keyPressed()
   //Menu Option
   if (key == 's' | key == 'S') 
   {
-    menuMusic.close();
-    menu.game = true;
+    if (menu.game == false)
+    {
+      menuMusic.close();
+      menu.game = true;
+    }
   }
   
   //Turning
