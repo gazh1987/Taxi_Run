@@ -1,7 +1,7 @@
 Taxi_Run
 ========
 
-2nd Year DIT Assignment
+Implemented in Java using the dev Processing environment
 
 version 1.1: New classes Buildings, Header, Destination. 
 
